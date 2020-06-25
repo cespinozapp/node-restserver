@@ -2,52 +2,31 @@ require('./config/config.js');
 
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+app.use(require('./routes/usuario.js'));
 
 app.get('/', function(req, res) {
-    res.json('Hello World')
+    res.json('Hello World');
 })
 
+mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true },
+    (err, res) => {
 
-app.get('/usuario', function(req, res) {
-    res.json('get Usuario')
-})
+        if (err) throw err;
 
-app.post('/usuario', function(req, res) {
+        console.log('Base de datos Online');
 
-    let body = req.body;
-
-    if (body.nombre === undefined) {
-        res.status(400).json({
-            ok: false,
-            mensaje: 'El nombre es necesario'
-        });
-    }
-    res.json({
-        persona: body
-    })
-})
-
-app.put('/usuario/:id', function(req, res) {
-
-    let id = req.params.id;
-
-    res.json({
-        id
     });
-})
 
-
-app.delete('/usuario', function(req, res) {
-    res.json('delete Usuario')
-})
 
 app.listen(process.env.PORT, () => {
     console.log(`Escuchando en puerto ${ process.env.PORT }`);
