@@ -6,37 +6,6 @@ let app = express();
 
 let Categoria = require('../models/categoria');
 
-// Mostrar categoria por ID
-app.get('/categoria/:id', (req, res) => {
-
-    console.log("GET Categoria por ID");
-
-    Categoria.findById(id, (err, categoriaDB) => {
-
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                err
-            });
-        }
-
-        if (!categoriaDB) {
-            return res.status(400).json({
-                ok: false,
-                err: {
-                    message: 'Categoria no encontrada'
-                }
-            });
-        }
-
-        res.json({
-            ok: true,
-            categoria: categoriaDB
-        });
-
-    });
-});
-
 // Mostrar todas las categorias
 app.get('/categoria', (req, res) => {
 
@@ -72,6 +41,37 @@ app.get('/categoria', (req, res) => {
             });
 
         });
+});
+
+// Mostrar categoria por ID
+app.get('/categoria/:id', (req, res) => {
+
+    console.log("GET Categoria por ID");
+
+    Categoria.findById(id, (err, categoriaDB) => {
+
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!categoriaDB) {
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Categoria no encontrada'
+                }
+            });
+        }
+
+        res.json({
+            ok: true,
+            categoria: categoriaDB
+        });
+
+    });
 });
 
 // Crea una categoria
