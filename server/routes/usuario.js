@@ -1,5 +1,5 @@
 const express = require('express');
-const Usuario = require('../models/usuarios.js');
+const Usuario = require('../models/usuario.js');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
@@ -28,7 +28,7 @@ app.get('/usuario', verificaToken, function(req, res) {
                 });
             }
 
-            Usuario.count(condicion, (err, conteo) => {
+            Usuario.countDocuments(condicion, (err, conteo) => {
 
                 res.json({
                     ok: true,
